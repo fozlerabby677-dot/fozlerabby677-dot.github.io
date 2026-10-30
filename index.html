@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>সহজ সাথী</title>
+<meta name="description" content="সন্দেহজনক মেসেজ যাচাই করুন এবং ফোনের কাজ শিখুন, সহজ বাংলায়।">
+<meta name="theme-color" content="#0f4c57">
+<meta property="og:title" content="সহজ সাথী">
+<meta property="og:description" content="সন্দেহজনক মেসেজ যাচাই করুন এবং ফোনের কাজ শিখুন, সহজ বাংলায়।">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f4c57'/%3E%3Cpath d='M14 18h36a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H32l-10 9v-9h-8a4 4 0 0 1-4-4V22a4 4 0 0 1 4-4z' fill='%23fff'/%3E%3Cpath d='M23 31l6 6 12-12' fill='none' stroke='%23e9a820' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&family=Noto+Serif+Bengali:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f1f5f4; --surface:#ffffff; --ink:#10282d; --ink-soft:#44585c;
+  --river:#0f4c57; --river-deep:#0a343c; --river-tint:#dcebe9;
+  --marigold:#e9a820; --marigold-tint:#fbeab8;
+  --signal:#c93a22; --signal-tint:#f8d9d2; --ok:#2e7d4f; --ok-tint:#d9efe1;
+  --line:#d3dedc;
+  --serif:"Noto Serif Bengali","Hind Siliguri",serif;
+  --sans:"Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--marigold);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+.skip{position:absolute;left:-999px;top:8px;background:#fff;padding:8px 14px;border-radius:8px;z-index:9}
+.skip:focus{left:8px}
+
+/* ---------- header ---------- */
+.site-head{position:sticky;top:0;z-index:5;background:rgba(241,245,244,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;min-height:62px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--serif);font-weight:700;font-size:21px;color:var(--river-deep)}
+.brand svg{width:34px;height:34px}
+.nav{display:none;gap:22px;font-size:16px}
+.nav a{text-decoration:none;color:var(--ink-soft);padding:6px 2px}
+.nav a:hover{color:var(--river)}
+.head-cta{background:var(--river);color:#fff;text-decoration:none;padding:9px 16px;border-radius:999px;font-weight:500;font-size:15px}
+@media(min-width:760px){.nav{display:flex}}
+
+/* ---------- hero ---------- */
+.hero{padding:34px 0 46px}
+.hero .wrap{display:grid;gap:26px}
+.hero h1{font-family:var(--serif);font-size:30px;line-height:1.35;margin:0 0 12px;color:var(--river-deep);letter-spacing:-.2px}
+.hero .lead{margin:0 0 16px;color:var(--ink-soft);max-width:34em}
+.pledge{display:flex;gap:10px;align-items:flex-start;background:var(--marigold-tint);border-left:4px solid var(--marigold);padding:12px 14px;border-radius:0 10px 10px 0;font-size:15.5px;max-width:34em}
+.pledge svg{flex:none;width:22px;height:22px;margin-top:2px}
+@media(min-width:560px){.btn-main{flex:2 1 0}}
+@media(min-width:900px){
+  .hero{padding:60px 0 70px}
+  .hero .wrap{grid-template-columns:1fr 1.2fr;gap:48px;align-items:start}
+  .hero h1{font-size:40px}
+}
+
+/* ---------- checker ---------- */
+.checker{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 10px 30px -18px rgba(15,76,87,.45)}
+.checker label{display:block;font-weight:600;margin-bottom:8px}
+.checker textarea{width:100%;min-height:150px;resize:vertical;font:inherit;font-size:16px;line-height:1.6;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:#fbfdfc;color:var(--ink)}
+.checker textarea:focus{border-color:var(--river);outline:none}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.btn{font:inherit;font-weight:600;font-size:16px;min-height:46px;padding:0 20px;border-radius:12px;border:2px solid transparent;cursor:pointer}
+.btn-main{background:var(--river);color:#fff;flex:1 1 100%}
+.btn-main:hover{background:var(--river-deep)}
+.btn-ghost{background:transparent;color:var(--river);border-color:var(--river-tint);flex:1 1 0}
+.btn-ghost:hover{border-color:var(--river)}
+.result{margin-top:16px}
+.result:empty{display:none}
+.verdict{display:flex;gap:14px;align-items:center;padding:14px;border-radius:12px}
+.verdict h3{margin:0;font-family:var(--serif);font-size:20px;line-height:1.3}
+.verdict p{margin:2px 0 0;font-size:15px}
+.verdict.lv1{background:var(--ok-tint)} .verdict.lv2{background:var(--marigold-tint)} .verdict.lv3{background:var(--signal-tint)}
+.gauge{display:flex;gap:4px;flex:none}
+.gauge i{display:block;width:12px;height:34px;border-radius:4px;background:rgba(16,40,45,.14);transform-origin:bottom;transition:background .3s,transform .3s}
+.lv1 .gauge i:nth-child(1){background:var(--ok)}
+.lv2 .gauge i:nth-child(-n+2){background:var(--marigold)}
+.lv3 .gauge i{background:var(--signal)}
+.gauge i.on{transform:scaleY(1.12)}
+.annot{margin:14px 0 0;padding:14px;background:#fbfdfc;border:1px dashed var(--line);border-radius:12px;white-space:pre-wrap;word-break:break-word;font-size:16px}
+.annot-title{margin:16px 0 4px;font-size:14px;color:var(--ink-soft)}
+mark{color:inherit;border-radius:4px;padding:1px 2px}
+mark.m2{background:var(--marigold-tint);box-shadow:inset 0 -2px 0 var(--marigold)}
+mark.m3{background:var(--signal-tint);box-shadow:inset 0 -2px 0 var(--signal)}
+.reasons{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.reasons li{padding:12px 14px;border-radius:12px;background:#fbfdfc;border:1px solid var(--line);font-size:15.5px}
+.reasons strong{display:block;margin-bottom:2px}
+.caveat{margin:14px 0 0;font-size:14px;color:var(--ink-soft)}
+
+/* ---------- sections ---------- */
+section.block{padding:54px 0}
+section.block.alt{background:var(--surface);border-block:1px solid var(--line)}
+.block h2{font-family:var(--serif);font-size:26px;line-height:1.35;margin:0 0 8px;color:var(--river-deep)}
+.block .sub{margin:0 0 26px;color:var(--ink-soft);max-width:38em}
+@media(min-width:900px){.block h2{font-size:32px}}
+
+/* services (data-driven) */
+.tiles{display:grid;gap:14px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:8px;text-decoration:none}
+.tile h3{margin:0;font-family:var(--serif);font-size:19px;line-height:1.4}
+.tile p{margin:0;color:var(--ink-soft);font-size:15.5px}
+.tile .ico{font-size:28px;line-height:1}
+.badge{align-self:flex-start;margin-top:auto;font-size:13.5px;padding:2px 12px;border-radius:999px;font-weight:500}
+.badge.live{background:var(--ok-tint);color:var(--ok)}
+.badge.soon{background:var(--marigold-tint);color:#7a5600}
+.tile.lead-tile{background:var(--river);border-color:var(--river);border-radius:20px;color:#fff}
+.tile.lead-tile p{color:#d3e6e4}
+.tile.lead-tile .badge.live{background:#fff;color:var(--river)}
+a.tile:hover{border-color:var(--river)}
+@media(min-width:700px){.tiles{grid-template-columns:repeat(2,1fr)}.lead-tile{grid-column:1/-1}}
+@media(min-width:960px){.tiles{grid-template-columns:repeat(3,1fr)}}
+
+/* steps */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:18px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start}
+.steps li::before{content:counter(s,bengali);display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--river);color:#fff;font-family:var(--serif);font-size:22px;font-weight:700}
+.steps h3{margin:2px 0 2px;font-size:18px}
+.steps p{margin:0;color:var(--ink-soft);font-size:15.5px}
+@media(min-width:900px){.steps{grid-template-columns:repeat(3,1fr)}}
+
+/* principles */
+.principles{display:grid;gap:14px}
+.principles div{padding:16px 18px;border-left:4px solid var(--river);background:var(--paper);border-radius:0 12px 12px 0}
+.principles h3{margin:0 0 2px;font-size:17.5px}
+.principles p{margin:0;font-size:15.5px;color:var(--ink-soft)}
+@media(min-width:800px){.principles{grid-template-columns:repeat(2,1fr)}}
+
+/* faq */
+.faq{display:grid;gap:10px;max-width:760px}
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.faq summary{cursor:pointer;list-style:none;padding:15px 48px 15px 16px;font-weight:600;position:relative;min-height:48px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:16px;top:10px;font-size:24px;color:var(--river);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:0;padding:0 16px 16px;color:var(--ink-soft);font-size:16px}
+
+/* footer */
+footer{background:var(--river-deep);color:#cfe0de;padding:38px 0 30px;font-size:15px}
+footer .brand{color:#fff;margin-bottom:10px}
+footer p{margin:6px 0;max-width:44em}
+footer .small{font-size:13.5px;opacity:.8;margin-top:18px}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#checker">মূল অংশে যান</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="সহজ সাথী, প্রথম পাতা">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0f4c57"/><path d="M14 18h36a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H32l-10 9v-9h-8a4 4 0 0 1-4-4V22a4 4 0 0 1 4-4z" fill="#fff"/><path d="M23 31l6 6 12-12" fill="none" stroke="#e9a820" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      সহজ সাথী
+    </a>
+    <nav class="nav" aria-label="প্রধান মেনু">
+      <a href="#services">সেবা</a>
+      <a href="#how">কীভাবে কাজ করে</a>
+      <a href="#promise">আমাদের নীতি</a>
+      <a href="#faq">প্রশ্নোত্তর</a>
+    </nav>
+    <a class="head-cta" href="#checker">মেসেজ যাচাই</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ===== হিরো: সরাসরি ব্যবহার করার মতো যাচাই-বাক্স ===== -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>মেসেজটা সন্দেহজনক লাগছে? আগে যাচাই করুন, তারপর বিশ্বাস।</h1>
+        <p class="lead">বিকাশ, নগদ, লটারি বা চাকরির নামে আসা মেসেজ এখানে পেস্ট করুন। সন্দেহজনক শব্দগুলোতে দাগ দিয়ে কারণসহ সহজ বাংলায় বুঝিয়ে দেওয়া হবে।</p>
+        <div class="pledge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#7a5600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 16H3L12 3z"/><path d="M12 10v4M12 17h.01"/></svg>
+          <span>OTP, পিন বা পাসওয়ার্ড কখনো এখানে পেস্ট করবেন না। আপনার লেখা শুধু আপনার ফোনেই যাচাই হয়, কোথাও পাঠানো হয় না।</span>
+        </div>
+      </div>
+
+      <div class="checker" id="checker">
+        <label for="msg">সন্দেহজনক মেসেজটি এখানে পেস্ট করুন</label>
+        <textarea id="msg" placeholder="যেমন: আপনার অ্যাকাউন্ট ২৪ ঘণ্টায় বন্ধ হয়ে যাবে..." autocomplete="off" spellcheck="false"></textarea>
+        <div class="row">
+          <button class="btn btn-main" id="go" type="button">যাচাই করুন</button>
+          <button class="btn btn-ghost" id="demo" type="button">উদাহরণ দেখুন</button>
+          <button class="btn btn-ghost" id="clear" type="button">মুছুন</button>
+        </div>
+        <div class="result" id="result" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== সেবাসমূহ (নতুন সেবা যোগ করতে নিচের স্ক্রিপ্টে FEATURES তালিকায় একটি লাইন বাড়ান) ===== -->
+  <section class="block alt" id="services">
+    <div class="wrap">
+      <h2>সহজ সাথী যা যা দেবে</h2>
+      <p class="sub">একটা একটা করে সেবা চালু হচ্ছে। যেগুলো তৈরি হয়ে গেছে সেগুলো এখনই ব্যবহার করা যায়।</p>
+      <div class="tiles" id="tiles"></div>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="wrap">
+      <h2>যাচাই কীভাবে কাজ করে</h2>
+      <p class="sub">কোনো জটিল কিছু নেই। তিন ধাপেই কাজ শেষ।</p>
+      <ol class="steps">
+        <li><div><h3>মেসেজ পেস্ট করুন</h3><p>এসএমএস, হোয়াটসঅ্যাপ বা মেসেঞ্জারের লেখা কপি করে বাক্সে বসান।</p></div></li>
+        <li><div><h3>দাগ দেওয়া শব্দ দেখুন</h3><p>প্রতারণায় সচরাচর যেসব শব্দ ও কৌশল থাকে, সেগুলোতে হলুদ বা লাল দাগ পড়বে।</p></div></li>
+        <li><div><h3>কারণ পড়ে সিদ্ধান্ত নিন</h3><p>কেন সন্দেহ হলো আর এখন কী করবেন, সহজ বাংলায় লেখা থাকবে।</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block alt" id="promise">
+    <div class="wrap">
+      <h2>আমাদের নীতি</h2>
+      <p class="sub">বিশ্বাস গড়তে হলে আগে সৎ থাকতে হয়। তাই কী পারি আর কী পারি না, সেটা সরাসরি বলে দিচ্ছি।</p>
+      <div class="principles">
+        <div><h3>আপনার লেখা কোথাও যায় না</h3><p>যাচাই আপনার ফোনের ব্রাউজারেই হয়। আমরা কোনো মেসেজ জমাই না।</p></div>
+        <div><h3>ফলাফল রায় নয়, সতর্কতা</h3><p>কোনো দাগ না পড়া মানেই নিরাপদ নয়। অচেনা কেউ টাকা বা তথ্য চাইলে সবসময় নিজে অফিসিয়াল অ্যাপ বা নম্বরে যাচাই করুন।</p></div>
+        <div><h3>কোনো প্রতিষ্ঠানের অংশ নই</h3><p>সহজ সাথী কোনো ব্যাংক, মোবাইল ব্যাংকিং সেবা বা সরকারি সংস্থার অংশ নয়।</p></div>
+        <div><h3>ভুল হলে শোধরাব</h3><p>নতুন ধরনের প্রতারণা ধরা পড়লে নিয়মগুলো নিয়মিত বাড়ানো হবে।</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap">
+      <h2>সাধারণ প্রশ্ন</h2>
+      <p class="sub">সবচেয়ে বেশি যা জানতে চাওয়া হয়।</p>
+      <div class="faq">
+        <details><summary>আমার মেসেজ কি আপনারা দেখতে বা জমা রাখতে পারেন?</summary><p>না। যাচাই সম্পূর্ণ আপনার ফোনের ব্রাউজারে হয়। লেখা কোনো সার্ভারে পাঠানো হয় না।</p></details>
+        <details><summary>ফলাফল কি শতভাগ নির্ভুল?</summary><p>না। এটা নিয়ম ধরে চলা একটা প্রাথমিক সহায়ক। নতুন কৌশলের প্রতারণা এখানে না-ও ধরা পড়তে পারে। তাই ফলাফল পেলেও নিজের বিবেচনা কাজে লাগান।</p></details>
+        <details><summary>প্রতারণার শিকার হয়ে গেলে কী করবেন?</summary><p>সঙ্গে সঙ্গে সংশ্লিষ্ট সেবার হটলাইনে জানান। বিকাশ ১৬২৪৭, নগদ ১৬১৬৭, জাতীয় জরুরি সেবা ৯৯৯। লেনদেনের স্ক্রিনশট রেখে দিন এবং পিন বদলে ফেলুন। নম্বর বদলাতে পারে, তাই অফিসিয়াল অ্যাপ থেকেও মিলিয়ে নিন।</p></details>
+        <details><summary>সহজ সাথী কারা বানিয়েছে?</summary><p>শিক্ষার্থীদের একটি ছোট উদ্যোগ, যার লক্ষ্য সাধারণ মানুষকে সহজ বাংলায় ডিজিটাল কাজে সাহায্য করা।</p></details>
+        <details><summary>আর কী কী আসছে?</summary><p>প্রশ্ন করলে ধাপে ধাপে বুঝিয়ে দেওয়া চ্যাট সাথী, ছাত্রদের জন্য ক্যারিয়ার ও স্কলারশিপ কর্নার, আর ফোনেই ছবি থেকে পিডিএফ বানানোর টুল।</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">সহজ সাথী</div>
+    <p>সহজ বাংলায় ডিজিটাল নিরাপত্তা ও দৈনন্দিন কাজের সাথী।</p>
+    <p class="small">এই সাইটের তথ্য সাধারণ সতর্কতার জন্য, আইনি বা আর্থিক পরামর্শ নয়। &copy; <span id="yr">২০২৬</span> সহজ সাথী</p>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   ১. সেবার তালিকা: নতুন ফিচার যোগ করতে শুধু একটি লাইন বাড়ান।
+      status: "live" = চালু, "soon" = শীঘ্রই। href দিলে ট্যাপ করা যাবে।
+   ===================================================================== */
+const FEATURES = [
+  { icon:"🛡️", title:"প্রতারণা যাচাই", desc:"সন্দেহজনক মেসেজ পেস্ট করলে ঝুঁকির শব্দগুলো দাগ দিয়ে কারণসহ দেখাবে। এখনই ব্যবহার করুন, উপরের বাক্সে।", status:"live", href:"#checker", lead:true },
+  { icon:"💬", title:"চ্যাট সাথী", desc:"ফোনের যেকোনো কাজে আটকে গেলে জিজ্ঞেস করুন, ধাপে ধাপে বুঝিয়ে দেবে।", status:"soon" },
+  { icon:"🎓", title:"ছাত্র কর্নার", desc:"পড়াশোনা, ক্যারিয়ার ও স্কলারশিপের সহজ বাংলা গাইড।", status:"soon" },
+  { icon:"🖼️", title:"ছবি থেকে পিডিএফ", desc:"আবেদনের জন্য ছবি পিডিএফ করুন ও ছোট করুন, কম্পিউটার দোকান ছাড়াই।", status:"soon" },
+  { icon:"📋", title:"সরকারি সেবার গাইড", desc:"এনআইডি, পাসপোর্ট, জন্মনিবন্ধনের আবেদন ধাপে ধাপে।", status:"soon" }
+];
+
+const tiles = document.getElementById("tiles");
+FEATURES.forEach(f => {
+  const el = document.createElement(f.href ? "a" : "article");
+  el.className = "tile" + (f.lead ? " lead-tile" : "");
+  if (f.href) el.href = f.href;
+  const ico = document.createElement("span"); ico.className = "ico"; ico.textContent = f.icon; ico.setAttribute("aria-hidden","true");
+  const h = document.createElement("h3"); h.textContent = f.title;
+  const p = document.createElement("p"); p.textContent = f.desc;
+  const b = document.createElement("span"); b.className = "badge " + f.status; b.textContent = f.status === "live" ? "চালু আছে" : "শীঘ্রই আসছে";
+  el.append(ico, h, p, b); tiles.append(el);
+});
+
+/* =====================================================================
+   ২. প্রতারণা যাচাইয়ের নিয়ম: নতুন নিয়ম যোগ করতে RULES-এ একটি অবজেক্ট বাড়ান।
+      w = ঝুঁকির ওজন (৩০ বা বেশি হলে লাল দাগ, নইলে হলুদ)
+   ===================================================================== */
+const RULES = [
+  { id:"otp", w:40, re:/(otp|ওটিপি|পিন(\s*নম্বর)?|\bpin\b|পাসওয়ার্ড|password|ভেরিফিকেশন\s*কোড|verification\s*code|কোড(টি)?\s*(দিন|পাঠান|বলুন|শেয়ার))/gi,
+    title:"গোপন তথ্য চাওয়া হচ্ছে", tip:"OTP, পিন বা পাসওয়ার্ড বিকাশ, নগদ, ব্যাংক বা কোনো সংস্থাই কখনো চায় না। এগুলো কাউকে বলবেন না।" },
+  { id:"prize", w:30, re:/(লটারি|পুরস্কার|জিতেছেন|বিজয়ী|প্রাইজ|অভিনন্দন|lottery|prize|winner|congratulations?)/gi,
+    title:"পুরস্কার বা লটারির লোভ", tip:"যে লটারিতে আপনি অংশই নেননি, সেখানে জেতা সম্ভব নয়। এটা প্রতারণার খুব পরিচিত কৌশল।" },
+  { id:"urgency", w:20, re:/(এখনই|এক্ষুনি|এক্ষুণি|আজই|জরুরি|অবিলম্বে|বন্ধ\s*হয়ে\s*যাবে|বাতিল\s*হয়ে\s*যাবে|ব্লক\s*হয়ে|(২৪|24)\s*ঘ\S{1,4}টা|urgent|immediately|suspended|blocked)/gi,
+    title:"তাড়াহুড়ো করানোর চেষ্টা", tip:"প্রতারকেরা ভাবার সময় দিতে চায় না। থামুন, নিজে অফিসিয়াল অ্যাপ বা নম্বরে গিয়ে যাচাই করুন।" },
+  { id:"money", w:25, re:/(টাকা\s*পাঠান|টাকা\s*দিন|ফি\s*(দিন|পাঠান)|প্রসেসিং\s*ফি|চার্জ\s*(দিন|পাঠান)|send\s*money|ক্যাশ\s*আউট|ভুল(ে|ক্রমে)?\s*[^।.\n]{0,30}টাকা)/gi,
+    title:"টাকা পাঠাতে বলা হচ্ছে", tip:"আগে টাকা দিতে হবে বা 'ভুল করে টাকা চলে গেছে' বলা হলে সাবধান। অচেনা কাউকে টাকা পাঠাবেন না।" },
+  { id:"account", w:20, re:/(অ্যাকাউন্ট[^।.\n]{0,25}(বন্ধ|ব্লক|নিষ্ক্রিয়|সীমিত|স্থগিত)|যাচাই\s*করুন|ভেরিফাই|verify|kyc|কেওয়াইসি|আপডেট\s*করুন)/gi,
+    title:"অ্যাকাউন্ট বন্ধের ভয় দেখানো", tip:"আসল সেবা আপনাকে অচেনা লিংকে গিয়ে যাচাই করতে বলে না। নিজের অ্যাপ খুলে দেখুন।" },
+  { id:"offplatform", w:10, re:/(whatsapp|হোয়াটসঅ্যাপ|ইমো|\bimo\b|টেলিগ্রাম|telegram)/gi,
+    title:"অন্য অ্যাপে যোগাযোগ করতে বলা", tip:"আলাদা অ্যাপে নিয়ে গেলে প্রতারকেরা নজর এড়াতে পারে। সাবধান থাকুন।" },
+  { id:"easy", w:25, re:/(ঘরে\s*বসে[^।.\n]{0,20}আয়|দ্বিগুণ|ডাবল\s*টাকা|গ্যারান্টি|নিশ্চিত\s*লাভ|বিনিয়োগ|investment|প্রতিদিন[^।.\n]{0,15}টাকা\s*আয়|টাস্ক)/gi,
+    title:"সহজে বেশি আয়ের প্রলোভন", tip:"কোনো ঝুঁকি ছাড়া নিশ্চিত লাভ বলে কিছু নেই। এসব প্রস্তাবে টাকা দেবেন না।" },
+  { id:"link", w:15, re:/((https?:\/\/|www\.)[^\s]+|[a-z0-9-]+\.(xyz|top|click|link|cc|tk|ml|gq|cf|ga|buzz|icu|site|online)(\/[^\s]*)?)/gi,
+    title:"সন্দেহজনক লিংক", tip:"অচেনা লিংকে চাপ দেবেন না। দরকার হলে অফিসিয়াল অ্যাপ বা ওয়েবসাইট নিজে খুলুন।" },
+  { id:"short", w:20, re:/((bit\.ly|tinyurl\.com|cutt\.ly|t\.ly|rb\.gy|shorturl\.at|is\.gd)\/[^\s]*)/gi,
+    title:"ছোট করা লিংক", tip:"ছোট করা লিংকে আসল ঠিকানা লুকানো থাকে, তাই প্রতারকেরা এগুলো পছন্দ করে।" },
+  { id:"fake", w:45, custom:true,
+    title:"নকল ওয়েবসাইটের মতো ঠিকানা", tip:"ঠিকানায় বিকাশ বা নগদের নাম আছে, কিন্তু আসল ঠিকানা নয়। এটা নকল সাইট হওয়ার সম্ভাবনা বেশি।" }
+];
+
+/* বিকাশ/নগদের নকল ঠিকানা ধরার আলাদা নিয়ম */
+function fakeRanges(text){
+  const out = [], re = /((https?:\/\/)?[a-z0-9][a-z0-9.-]*\.[a-z]{2,}[^\s]*)/gi; let m;
+  while((m = re.exec(text))){
+    const host = m[1].replace(/^https?:\/\//i,"").split(/[\/?#]/)[0].toLowerCase();
+    const letters = host.replace(/[^a-z]/g,"");
+    const bk = /b+k+a+s+h+/.test(letters) && !(host==="bka.sh" || host==="bkash.com" || host.endsWith(".bkash.com"));
+    const ng = /n+a+g+a+d+/.test(letters) && !(host==="nagad.com.bd" || host.endsWith(".nagad.com.bd"));
+    if(bk || ng) out.push([m.index, m.index + m[1].length]);
+  }
+  return out;
+}
+
+/* =====================================================================
+   ৩. যাচাই চালানো ও ফলাফল দেখানো
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+const box = $("msg"), out = $("result");
+const SAMPLE = "প্রিয় গ্রাহক, আপনার বিকাশ অ্যাকাউন্ট ২৪ ঘণ্টার মধ্যে বন্ধ হয়ে যাবে। এখনই http://bkaash-verify.xyz/login এ গিয়ে পিন দিয়ে যাচাই করুন। অভিনন্দন! আপনি ৫০,০০০ টাকার লটারি জিতেছেন।";
+
+function analyze(text){
+  const level = new Uint8Array(text.length), hit = [];
+  let score = 0;
+  RULES.forEach(r => {
+    const spans = r.custom ? fakeRanges(text) : [...text.matchAll(r.re)].map(m => [m.index, m.index + m[0].length]);
+    if(!spans.length) return;
+    hit.push(r); score += r.w;
+    const lv = r.w >= 30 ? 3 : 2;
+    spans.forEach(([a,b]) => { for(let i=a;i<b;i++) level[i] = Math.max(level[i], lv); });
+  });
+  return { level, hit, score:Math.min(score,100) };
+}
+
+function show(text){
+  out.replaceChildren();
+  if(!text.trim()){
+    const p = document.createElement("p"); p.className = "caveat"; p.textContent = "আগে মেসেজটি বাক্সে পেস্ট করুন, তারপর \"যাচাই করুন\" চাপুন।"; out.append(p); return;
+  }
+  const { level, hit, score } = analyze(text);
+  const lv = score >= 45 ? 3 : score >= 15 ? 2 : 1;
+  const heads = [
+    ["বড় কোনো সন্দেহজনক লক্ষণ পাওয়া যায়নি","তবে এটা নিরাপদ হওয়ার নিশ্চয়তা নয়।"],
+    ["সন্দেহজনক","কয়েকটা সতর্কতার চিহ্ন আছে। সাড়া দেওয়ার আগে নিজে যাচাই করুন।"],
+    ["ঝুঁকিপূর্ণ, সম্ভবত প্রতারণা","এই মেসেজে সাড়া দেবেন না, লিংকে চাপবেন না, কিছু পাঠাবেন না।"]
+  ][lv-1];
+
+  const v = document.createElement("div"); v.className = "verdict lv" + lv;
+  const g = document.createElement("div"); g.className = "gauge"; g.setAttribute("aria-hidden","true");
+  for(let i=0;i<3;i++){ g.append(document.createElement("i")); }
+  const t = document.createElement("div");
+  const h3 = document.createElement("h3"); h3.textContent = heads[0];
+  const p = document.createElement("p"); p.textContent = heads[1];
+  t.append(h3, p); v.append(g, t); out.append(v);
+  Array.from(g.children).forEach((el,i) => setTimeout(() => el.classList.toggle("on", i < lv), 80*i));
+
+  if(hit.length){
+    const lab = document.createElement("p"); lab.className = "annot-title"; lab.textContent = "আপনার মেসেজে দাগ দেওয়া অংশ:"; out.append(lab);
+    const a = document.createElement("div"); a.className = "annot";
+    for(let i=0;i<text.length;){
+      let j = i; while(j<text.length && level[j]===level[i]) j++;
+      const seg = text.slice(i,j);
+      if(level[i]){ const m = document.createElement("mark"); m.className = "m" + level[i]; m.textContent = seg; a.append(m); }
+      else a.append(document.createTextNode(seg));
+      i = j;
+    }
+    out.append(a);
+    const ul = document.createElement("ul"); ul.className = "reasons";
+    hit.sort((x,y)=>y.w-x.w).forEach(r => {
+      const li = document.createElement("li"), s = document.createElement("strong");
+      s.textContent = r.title; li.append(s, document.createTextNode(r.tip)); ul.append(li);
+    });
+    out.append(ul);
+  }
+  const c = document.createElement("p"); c.className = "caveat";
+  c.textContent = "এটা নিয়ম ধরে চলা একটি প্রাথমিক সহায়ক, চূড়ান্ত রায় নয়। প্রতারিত হলে বিকাশ ১৬২৪৭, নগদ ১৬১৬৭ বা ৯৯৯-এ জানান।";
+  out.append(c);
+}
+
+$("go").addEventListener("click", () => show(box.value));
+$("demo").addEventListener("click", () => { box.value = SAMPLE; show(SAMPLE); });
+$("clear").addEventListener("click", () => { box.value = ""; out.replaceChildren(); box.focus(); });
+$("yr").textContent = new Date().getFullYear().toLocaleString("bn-BD",{useGrouping:false});
+</script>
+</body>
+</html>
